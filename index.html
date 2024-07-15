@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed YouTube Video</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .fullscreen-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .black-block {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="fullscreen-overlay">
+        <div class="black-block"></div>
+    </div>
+    <iframe id="youtube-video" src="https://www.youtube.com/embed/NMYcZP3T9_Q?autoplay=1&mute=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+    <script>
+        const iframe = document.getElementById('youtube-video');
+        const overlay = document.querySelector('.fullscreen-overlay');
+        
+        iframe.addEventListener('load', () => {
+            setTimeout(() => {
+                const requestFullScreen = iframe.requestFullscreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullscreen || iframe.msRequestFullscreen;
+                if (requestFullScreen) {
+                    requestFullScreen.call(iframe);
+                }
+                overlay.style.display = 'flex';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
